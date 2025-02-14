@@ -1,4 +1,5 @@
 class ProductOfNumbers {
+    
     List<Integer> listProduct;
 
     public ProductOfNumbers() {
@@ -13,7 +14,9 @@ class ProductOfNumbers {
         }else{
             listProduct.add(listProduct.get(listProduct.size()-1)*num);    
         }    
+    
     }
+
     
     public int getProduct(int k) {
         if(k>listProduct.size()-1){
