@@ -1,54 +1,47 @@
-import java.util.Arrays;
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 class Solution {
-    private int[] tasks;
-    private int[] workers;
-    private int strength;
-    private int pills;
-    private int taskCount;
-    private int workerCount;
-
     public int maxTaskAssign(int[] tasks, int[] workers, int pills, int strength) {
         Arrays.sort(tasks);
         Arrays.sort(workers);
-        this.tasks = tasks;
-        this.workers = workers;
-        this.strength = strength;
-        this.pills = pills;
-        taskCount = tasks.length;
-        workerCount = workers.length;
-        int left = 0, right = Math.min(workerCount, taskCount);
-        while (left < right) {
-            int mid = (left + right + 1) / 2;
-            if (check(mid)) {
-                left = mid;
+        
+        int left = 1, right = Math.min(tasks.length, workers.length), ans = 0;
+        
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (canAssign(tasks, workers, pills, strength, mid)) {
+                ans = mid;
+                left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        return left;
+        return ans;
     }
+    
+    private boolean canAssign(int[] tasks, int[] workers, int pills, int strength, int k) {
+        Deque<Integer> candidateWorkers = new ArrayDeque<>();
+        int workerPtr = workers.length - 1;
+        
 
-    private boolean check(int x) {
-        int taskIdx = 0;
-        Deque<Integer> taskQueue = new ArrayDeque<>();
-        int remainingPills = pills;
-        for (int workerIdx = workerCount - x; workerIdx < workerCount; ++workerIdx) {
-            while (taskIdx < x && tasks[taskIdx] <= workers[workerIdx] + strength) {
-                taskQueue.offer(tasks[taskIdx++]);
+        for (int i = k - 1; i >= 0; i--) {
+
+            while (workerPtr >= workers.length - k && 
+                   workers[workerPtr] + strength >= tasks[i]) {
+                candidateWorkers.addFirst(workers[workerPtr]);
+                workerPtr--;
             }
-            if (taskQueue.isEmpty()) {
-                return false;
-            }
-            if (taskQueue.peekFirst() <= workers[workerIdx]) {
-                taskQueue.pollFirst();
-            } else if (remainingPills == 0) {
-                return false;
+            
+            if (candidateWorkers.isEmpty()) return false;
+            
+            if (candidateWorkers.getLast() >= tasks[i]) {
+                // Worker can complete without pill
+                candidateWorkers.pollLast();
             } else {
-                --remainingPills;
-                taskQueue.pollLast();
+                // Need to use pill
+                if (pills == 0) return false;
+                pills--;
+                candidateWorkers.pollFirst();
             }
         }
         return true;
