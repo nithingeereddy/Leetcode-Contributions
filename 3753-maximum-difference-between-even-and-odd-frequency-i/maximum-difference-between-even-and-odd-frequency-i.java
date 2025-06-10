@@ -9,18 +9,11 @@ class Solution {
                 m.put(s.charAt(i),1);
             }
         }
-       int maxOdd = Integer.MIN_VALUE;
-        int minEven = Integer.MAX_VALUE;
-
-        for (int freq : m.values()) {
-            if (freq % 2 == 1) {
-                maxOdd = Math.max(maxOdd, freq);
-            } else {
-                minEven = Math.min(minEven, freq);
-            }
-        }
-
-        // Return max difference
-        return maxOdd - minEven;
+      int odd=Integer.MIN_VALUE,even=Integer.MAX_VALUE;
+      for(int x:m.values()){
+        if(x%2==0) even=Math.min(even,x);
+        else odd=Math.max(odd,x);
+      }
+      return odd-even;
     }
 }
