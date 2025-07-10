@@ -19,22 +19,16 @@ class Solution {
         if(root==null) return result;
         String current_path=Integer.toString(root.val);
         if(root.left==null && root.right==null) result.add(current_path);
-         if(root.left!=null) 
-         dfs(root.left,result,current_path);
-         if(root.right!=null) 
-         dfs(root.right,result,current_path);
-         
-         return result;
+        if(root.left!=null) dfs(root.left,current_path,result);
+        if(root.right!=null) dfs(root.right,current_path,result);
+        return result;
     }
-
-    public void dfs(TreeNode root,List<String> result,String current_path){
-        current_path+="->"+root.val;
-        if(root.left==null && root.right==null){ result.add(current_path);
+    public void dfs(TreeNode node,String current,List<String> result){
+        current+="->"+node.val;
+        if(node.left==null && node.right==null) {result.add(current);
         return;
         }
-        if(root.left!=null) 
-        dfs(root.left,result,current_path);
-        if(root.right!=null) 
-        dfs(root.right,result,current_path);
+        if(node.left!=null) dfs(node.left,current,result);
+        if(node.right!=null) dfs(node.right,current,result);
     }
 }
