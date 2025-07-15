@@ -13,9 +13,9 @@ class Solution {
                 l++;
             }
             if(t==1)
-            m=Math.max(m,r-l+1);
+            m=Math.max(m,r-l);
             r++;
         }
-        return f==0?nums.length-1:m-1;
+        return f==0?nums.length-1:m;
     }
 }
