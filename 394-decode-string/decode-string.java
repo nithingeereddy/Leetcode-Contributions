@@ -1,41 +1,37 @@
 class Solution {
     public String decodeString(String s) {
-        Stack<Integer> countStack = new Stack<>();
-        Stack<String> stringStack = new Stack<>();
-        String res = "";
-        int r = 0;
-
-        while (r < s.length()) {
-            char ch = s.charAt(r);
-
-            if (Character.isDigit(ch)) {
-                int count = 0;
-                while (Character.isDigit(s.charAt(r))) {
-                    count = count * 10 + (s.charAt(r) - '0');
-                    r++;
-                }
-                countStack.push(count);
-            }
-            else if (ch == '[') {
-                stringStack.push(res);
-                res = "";
+        Stack<Integer> ct=new Stack<>();
+        Stack<String> st=new Stack<>();
+        int c=0,r=0;
+        String res="";
+        while(r<s.length()){
+            c=0;
+            if(Character.isDigit(s.charAt(r))){
+            while(Character.isDigit(s.charAt(r))){
+                c=10*c+(s.charAt(r)-'0');
                 r++;
             }
-            else if (ch == ']') {
-                StringBuilder temp = new StringBuilder(stringStack.pop());
-                int repeat = countStack.pop();
-                for (int i = 0; i < repeat; i++) {
-                    temp.append(res);
-                }
-                res = temp.toString();
+            ct.push(c);
+            }
+            if(s.charAt(r)=='['){
+                st.push(res);
+                res="";
                 r++;
             }
-            else {
-                res += ch;
+            else if(s.charAt(r)==']'){
+             StringBuilder t=new StringBuilder(st.pop());
+             int cnt=ct.pop();
+             for(int i=0;i<cnt;i++){
+                t.append(res);
+             }   
+             res=t.toString();
+             r++;
+            }
+            else{
+                res+=s.charAt(r);
                 r++;
             }
         }
-
         return res;
     }
 }
