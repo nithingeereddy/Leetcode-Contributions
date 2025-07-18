@@ -1,8 +1,8 @@
 class Solution {
     public int equalPairs(int[][] grid) {
         int n=grid.length;
-        Map<List<Integer>, Integer> grid_row=new HashMap<>();
-        Map<List<Integer>, Integer> grid_col=new HashMap<>();
+        Map<List<Integer>,Integer> grid_row=new HashMap<>();
+        Map<List<Integer>,Integer> grid_col=new HashMap<>();
         for(int i=0;i<n;i++){
             List<Integer> row=new ArrayList<>();
             List<Integer> col=new ArrayList<>();
@@ -20,6 +20,5 @@ class Solution {
             }
         }
         return ans;
-
     }
 }
