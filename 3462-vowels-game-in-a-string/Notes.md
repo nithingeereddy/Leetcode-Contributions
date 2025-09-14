@@ -1,1 +1,1 @@
-<h2>vowels-game-in-a-string Notes</h2><hr>[ Time taken: 1 m 11 s ]
+<h2>vowels-game-in-a-string Notes</h2><hr>[ Time taken: 3 m 6 s ]
