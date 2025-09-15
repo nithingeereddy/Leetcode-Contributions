@@ -1,10 +1,9 @@
 class Solution {
-    final Set<Character> vowels=new HashSet<>(Arrays.asList('a','e','i','o','u'));
-    public String vowelMask(String s){
+    public String maskIt(String s){
         String t="";
         for(int i=0;i<s.length();i++){
-            if(vowels.contains(s.charAt(i))){
-                t+='*';
+            if(s.charAt(i)=='a' || s.charAt(i)=='e' || s.charAt(i)=='i' || s.charAt(i)=='o' || s.charAt(i)=='u'){
+                t+="*";
                 continue;
             }
             t+=s.charAt(i);
@@ -13,34 +12,32 @@ class Solution {
     }
     public String[] spellchecker(String[] wordlist, String[] queries) {
         Set<String> exactMatch=new HashSet<>(Arrays.asList(wordlist));
-        Map<String,String> caseInsen = new HashMap<>();
-        Map<String,String> ms=new HashMap<>();
+        Map<String,String> caseIn=new HashMap<>();
+        Map<String,String> transform=new HashMap<>();
         for(String word:wordlist){
             String lower=word.toLowerCase();
-            String masked=vowelMask(lower);
-            caseInsen.putIfAbsent(lower,word);
-            ms.putIfAbsent(masked,word);   
+            String mask=maskIt(lower);
+            caseIn.putIfAbsent(lower,word);
+            transform.putIfAbsent(mask,word);
         }
-        String a[]=new String[queries.length];
+        String result[]=new String[queries.length];
         for(int i=0;i<queries.length;i++){
             if(exactMatch.contains(queries[i])){
-                a[i]=queries[i];
+                result[i]=queries[i];
                 continue;
             }
             String l=queries[i].toLowerCase();
-            String m=vowelMask(l);
-            if(caseInsen.containsKey(l)){
-                a[i]=caseInsen.get(l);
+            String m=maskIt(l);
+            if(caseIn.containsKey(l)){
+                result[i]=caseIn.get(l);
                 continue;
             }
-            
-            if(ms.containsKey(m)){
-                a[i]=ms.get(m);
+            if(transform.containsKey(m)){
+                result[i]=transform.get(m);
                 continue;
             }
-
-            a[i]="";
+            result[i]="";
         }
-        return a;
+        return result;
     }
 }
