@@ -1,1 +1,1 @@
-<h2>vowel-spellchecker Notes</h2><hr>[ Time taken: 20 m 19 s ]
+<h2>vowel-spellchecker Notes</h2><hr>[ Time taken: 13 m 5 s ]
